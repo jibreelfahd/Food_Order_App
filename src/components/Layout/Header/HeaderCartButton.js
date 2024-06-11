@@ -1,13 +1,13 @@
 import React from "react";
 
-import Cart from "../../Cart/CartIcon";
+import CartIcon from "../../Cart/CartIcon";
 import styles from "./HeaderCartButton.module.css";
 
-const HeaderCartButton = () => {
+const HeaderCartButton = ({ onClickButton }) => {
   return (
-    <button className={styles.button}>
+    <button onClick={onClickButton} className={styles.button}>
       <span className={styles.icon}>
-        <Cart />
+        <CartIcon />
       </span>
       <span>Your Cart</span>
       <span className={styles.badge}>0</span>

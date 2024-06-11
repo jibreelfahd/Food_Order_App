@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Header from "./components/Layout/Header/Header";
 import Meals from "./components/Meals/Meals";
-import Modal from "./components/UI/Modal/Modal";
+import Cart from "./components/Cart/Cart";
+
 const App = () => {
+  const [showCart, setShowCart] = useState(false);
+
+  const showCartHandler = () => {
+    setShowCart(true);
+  };
+
+  const hideCartHandler = () => {
+    setShowCart(false);
+  };
+
   return (
     <>
-      <Header />
+      {showCart && <Cart onHide={hideCartHandler} />}
+      <Header onShow={showCartHandler} />
       <main>
-        <Modal />
         <Meals />
       </main>
     </>

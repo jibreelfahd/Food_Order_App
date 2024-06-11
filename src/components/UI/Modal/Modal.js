@@ -2,31 +2,31 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import Card from "../Card/Card";
-import Cart from "../../Cart/Cart";
 
 import styles from "./Modal.module.css";
 
 // desc: backdrop overlay component for cartmodal
-const Backdrop = () => {
-  return <div className={styles.overlay} />;
+const Backdrop = ({ onClicks }) => {
+  return <div className={styles.overlay} onClick={onClicks}/>;
 };
 
-const CartModal = () => {
+const CartModal = (props) => {
   return (
     <Card className={styles.modal}>
-      <Cart />
+      {props.children}
     </Card>
   );
 };
-const Modal = () => {
+
+const Modal = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <Backdrop />,
+        <Backdrop onClicks={props.onClickBg}/>,
         document.querySelector(".backdrop-overlay")
       )}
       {ReactDOM.createPortal(
-        <CartModal />,
+        <CartModal>{props.children}</CartModal>,
         document.querySelector(".modal-overlay")
       )}
     </>

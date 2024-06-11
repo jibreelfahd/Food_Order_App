@@ -1,9 +1,10 @@
 import React from "react";
 
 import styles from "./Cart.module.css";
+import Modal from "../UI/Modal/Modal";
 
-const Cart = (props) => {
-  const cartItems = [
+const Cart = ({ onHide }) => {
+  const items = [
     {
       id: "c1",
       name: "Sushi",
@@ -11,15 +12,13 @@ const Cart = (props) => {
       price: "12.99",
     },
     {
-      id: "c1",
+      id: "c2",
       name: "Sushi",
       amount: "2",
       price: "12.99",
     },
-  ];
-
-  const items = cartItems.map((item) => (
-    <li>
+  ].map((item) => (
+    <li key={item.id}>
       <div>
         <h2>{item.name}</h2>
         <span className={styles.price}>${item.price}</span>
@@ -33,7 +32,7 @@ const Cart = (props) => {
   ));
 
   return (
-    <div>
+    <Modal onClickBg={onHide}>
       <ul className={styles["cart--items"]}>
         {items}
       </ul>
@@ -42,10 +41,10 @@ const Cart = (props) => {
         <span>$88.99</span>
       </div>
       <div className={styles.cart__actions}>
-        <button className={styles.cart__close}>Close</button>
+        <button onClick={onHide} className={styles.cart__close}>Close</button>
         <button className={styles.cart__order}>Order</button>
       </div>
-    </div>
+    </Modal>
   );
 };
 
