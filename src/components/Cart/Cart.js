@@ -8,32 +8,38 @@ import styles from "./Cart.module.css";
 const Cart = ({ onHide }) => {
   const cartCtx = useContext(CartContext);
 
-  const items =  (
-    <li key={cartCtx.items.id}>
+  const totalCartAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
+
+  //@desc: checking if cart items are available
+  // --in order to display the 'order button
+  const hasItems = cartCtx.items.length > 0;
+
+  const items = cartCtx.items.map((item) => (
+    <li key={item.id}>
       <div>
-        <h2>{cartCtx.items.name}</h2>
-        <span className={styles.price}>${cartCtx.items.price}</span>
-        <span className={styles.amount}>x {cartCtx.items.amount}</span>
+        <h2>{item.name}</h2>
+        <span className={styles.price}>${item.price}</span>
+        <span className={styles.amount}>x {item.amount}</span>
       </div>
       <div className={styles.cart__controls}>
         <button>-</button>
         <button>+</button>
       </div>
     </li>
-  );
+  ));
 
   return (
     <Modal onClickBg={onHide}>
-      <ul className={styles["cart--items"]}>
-        {items}
-      </ul>
+      <ul className={styles["cart--items"]}>{items}</ul>
       <div className={styles.cart__total}>
         <span>Total Amount</span>
-        <span>${cartCtx.totalAmount}</span>
+        <span>{totalCartAmount}</span>
       </div>
       <div className={styles.cart__actions}>
-        <button onClick={onHide} className={styles.cart__close}>Close</button>
-        <button className={styles.cart__order}>Order</button>
+        <button onClick={onHide} className={styles.cart__close}>
+          Close
+        </button>
+        {hasItems && <button className={styles.cart__order}>Order</button>}
       </div>
     </Modal>
   );
