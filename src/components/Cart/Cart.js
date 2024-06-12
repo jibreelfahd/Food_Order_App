@@ -1,35 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
+
+import Modal from "../UI/Modal/Modal";
+import CartContext from "../../store/cart-context";
 
 import styles from "./Cart.module.css";
-import Modal from "../UI/Modal/Modal";
 
 const Cart = ({ onHide }) => {
-  const items = [
-    {
-      id: "c1",
-      name: "Sushi",
-      amount: "2",
-      price: "12.99",
-    },
-    {
-      id: "c2",
-      name: "Sushi",
-      amount: "2",
-      price: "12.99",
-    },
-  ].map((item) => (
-    <li key={item.id}>
+  const cartCtx = useContext(CartContext);
+
+  const items =  (
+    <li key={cartCtx.items.id}>
       <div>
-        <h2>{item.name}</h2>
-        <span className={styles.price}>${item.price}</span>
-        <span className={styles.amount}>x {item.amount}</span>
+        <h2>{cartCtx.items.name}</h2>
+        <span className={styles.price}>${cartCtx.items.price}</span>
+        <span className={styles.amount}>x {cartCtx.items.amount}</span>
       </div>
       <div className={styles.cart__controls}>
         <button>-</button>
         <button>+</button>
       </div>
     </li>
-  ));
+  );
 
   return (
     <Modal onClickBg={onHide}>
@@ -38,7 +29,7 @@ const Cart = ({ onHide }) => {
       </ul>
       <div className={styles.cart__total}>
         <span>Total Amount</span>
-        <span>$88.99</span>
+        <span>${cartCtx.totalAmount}</span>
       </div>
       <div className={styles.cart__actions}>
         <button onClick={onHide} className={styles.cart__close}>Close</button>
