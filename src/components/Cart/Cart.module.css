@@ -1,3 +1,8 @@
+.cart--items {
+  max-height: 20rem;
+  overflow: scroll;
+}
+
 ul {
   list-style-type: none;
   margin: 0;

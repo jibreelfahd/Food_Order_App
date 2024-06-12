@@ -14,16 +14,20 @@ const Cart = ({ onHide }) => {
   // --in order to display the 'order button
   const hasItems = cartCtx.items.length > 0;
 
+  const increaseCartItem = (item) => {};
+
+  const decreaseCartItem = (id) => {};
+
   const items = cartCtx.items.map((item) => (
     <li key={item.id}>
       <div>
         <h2>{item.name}</h2>
-        <span className={styles.price}>${item.price}</span>
+        <span className={styles.price}>${item.price.toFixed(2)}</span>
         <span className={styles.amount}>x {item.amount}</span>
       </div>
       <div className={styles.cart__controls}>
-        <button>-</button>
-        <button>+</button>
+        <button onClick={decreaseCartItem.bind(null,item.id)}>–</button>
+        <button onClick={increaseCartItem.bind(null,item)}>+</button>
       </div>
     </li>
   ));
