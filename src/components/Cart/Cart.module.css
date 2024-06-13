@@ -1,6 +1,6 @@
 .cart--items {
   max-height: 20rem;
-  overflow: scroll;
+  overflow-y: auto;
 }
 
 ul {
