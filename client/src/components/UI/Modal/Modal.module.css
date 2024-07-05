@@ -1,10 +1,10 @@
 .modal {
   position: fixed;
   width: 40%;
-  max-width: 60rem;
+  max-width: 70rem;
   margin: 2rem auto;
   z-index: 100;
-  top: 20vh;
+  top: 10vh;
   left: 30%;
   animation: slide-down 600ms ease-out forwards;
 }
