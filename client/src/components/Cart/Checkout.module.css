@@ -1,7 +1,7 @@
 .form {
   margin: 1rem 0;
-  max-height: 18rem;
-  /* overflow-y: scroll; */
+  max-height: 15rem;
+  overflow-y: scroll;
 }
 
 .form-control {
@@ -16,9 +16,18 @@
 
 .form-control input {
   font: inherit;
-  width: 50%;
+  width: 75%;
   border: 1px solid #ccc;
   border-radius: 3px;
+}
+
+.invalid label {
+  color: #ca3e51;
+}
+
+.invalid input{
+  border-color: #aa0b20;
+  background: #ffeff1;
 }
 
 .actions {
