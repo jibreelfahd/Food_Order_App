@@ -4,7 +4,7 @@ import styles from "./Checkout.module.css";
 
 // helper functions
 const isEmpty = (value) => value.trim() === "";
-const isNotSixChars = (value) => value.trim().length !== 7;
+const isNotSixChars = (value) => value.trim().length !== 6;
 
 const Checkout = ({ onCancel }) => {
   const [formValidity, setFormValidity] = useState({
@@ -30,7 +30,7 @@ const Checkout = ({ onCancel }) => {
     const enteredNameIsValid = !isEmpty(enteredName);
     const enteredStreetIsValid = !isEmpty(enteredStreet);
     const enteredCityIsValid = !isEmpty(enteredCity);
-    const enteredPostalCodeIsValid = isNotSixChars(enteredPostalCode);
+    const enteredPostalCodeIsValid = !isNotSixChars(enteredPostalCode);
 
     setFormValidity({
       name: enteredNameIsValid,
