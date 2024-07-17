@@ -12,6 +12,7 @@ app.use(cors('*'));
 // desc: IMPORTS  
 import connectDB from './db/index.js';
 import mealsRouter from './routes/Meals/mealsRouter.js';
+import orderRouter from './routes/Order/orderRouter.js';
 
 const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI;
@@ -29,3 +30,4 @@ const start = async () => {
 start();
 
 app.use('/meals', mealsRouter);
+app.use('/meals', orderRouter);
