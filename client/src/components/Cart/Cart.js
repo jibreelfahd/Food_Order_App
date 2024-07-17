@@ -8,6 +8,9 @@ import styles from "./Cart.module.css";
 
 const Cart = ({ onHide }) => {
   const [isCheckout, setIsCheckout] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasSubmit, setHasSubmit] = useState(false);
+
   const cartCtx = useContext(CartContext);
 
   const totalCartAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
@@ -26,6 +29,43 @@ const Cart = ({ onHide }) => {
 
   const checkoutHandler = () => {
     setIsCheckout(true);
+  };
+
+  const submitCartHandler = async ({
+    customerName,
+    street,
+    postalCode,
+    city,
+  }) => {
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("http://localhost:8080/meals/order/meal", {
+        method: "POST",
+        body: JSON.stringify({
+          items: cartCtx.items,
+          customerName,
+          street,
+          postalCode,
+          city,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Sorry something happened, Try Again Later");
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      setIsSubmitting(false);
+      setHasSubmit(true);
+      cartCtx.clearCart();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const items = cartCtx.items.map((item) => (
@@ -55,17 +95,37 @@ const Cart = ({ onHide }) => {
     </div>
   );
 
-  return (
-    <Modal onClickBg={onHide}>
+  const isSubmittingOrderModal = <p>Submitting Order...</p>;
+
+  const hasSubmitOrderModal = (
+    <>
+      <p>Order Recieved, you will be contacted shortly</p>
+      <div className={styles.cart__actions}>
+        <button onClick={onHide} className={styles.cart__order}>
+          Close
+        </button>
+      </div>
+    </>
+  );
+
+  const cartModal = (
+    <>
       <ul className={styles["cart--items"]}>{items}</ul>
       <div className={styles.cart__total}>
         <span>Total Amount</span>
         <span>{totalCartAmount}</span>
       </div>
-      {isCheckout && <Checkout onCancel={onHide} />}
+      {isCheckout && (
+        <Checkout onConfirm={submitCartHandler} onCancel={onHide} />
+      )}
       {!isCheckout && actionButtons}
-    </Modal>
+    </>
   );
+  return <Modal onClickBg={onHide}>
+    {!isSubmitting && !hasSubmit && cartModal}
+    {isSubmitting && isSubmittingOrderModal}
+    {hasSubmit&& hasSubmitOrderModal}
+    </Modal>;
 };
 
 export default Cart;
